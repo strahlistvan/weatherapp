@@ -2,9 +2,9 @@ app.controller("ForecastController", ["$scope", "getCoordsService", "$http", fun
   $scope.coords = getCoordsService();
   $scope.weatherApiKey = "15bfd5d7f3daa9636b3fb1d3a68bc28a";
   $scope.allDayWeather = [];
-  
-   var numberOfDays = 10;
-   var url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+$scope.coords.latitude+"&lon="+$scope.coords.longitude+"&appid="+$scope.weatherApiKey+"&cnt="+numberOfDays;
+  $scope.numberOfDays = 16;
+   
+   var url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+$scope.coords.latitude+"&lon="+$scope.coords.longitude+"&appid="+$scope.weatherApiKey+"&cnt="+$scope.numberOfDays;
    
    $http.get(url)
    .success(function(response) {
@@ -24,4 +24,14 @@ app.controller("ForecastController", ["$scope", "getCoordsService", "$http", fun
    .then(function(err){
 		console.log(err);
    });
+   
+   
+   $scope.daysCount = 9;
+   $scope.isHidden = function(index)
+   {
+		if ($scope.daysCount > index)
+			return false;
+		return true;
+   }
+   
 }]);

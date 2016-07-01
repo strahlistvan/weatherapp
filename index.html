@@ -10,10 +10,11 @@
 		<link href="http://www.w3schools.com/lib/w3.css" rel="stylesheet" />
 	</head>
     <body>
-	    <div id="w3-container">
+	    <div class="w3-container w3-pale-blue">
+		
 			<div data-ng-controller="MainController" id="current-weather-div" class="w3-center">
 				<h1> {{ title }}</h1>
-				<div class="w3-card-12 w3-quarter"> 
+				<div class="w3-card-12 w3-quarter w3-round-xlarge"> 
 					<div id="countryDiv"> Country: {{ country }} </div>
 					<div id="coordDiv"> Coordinates: ({{ coords.latitude }}°, {{coords.longitude}}°) </div>
 					<div >  {{ weatherData.temp | celsius }}</div>
@@ -26,15 +27,22 @@
 			</div>
 				
 			<div style="clear: both"> </div>
-			<h2> Forecast of the next 10 days </h2>
 			
 			<div  data-ng-controller="ForecastController" id="forecast-div"> 
+				<h2> 
+					Forecast of the next 
+					<input type="number" value="{{ daysCount }}" ng-model="daysCount" min="1" max="{{  numberOfDays }}" > </input> 
+					days 
+				</h2>
+				
 				<div data-ng-repeat="weather in allDayWeather">
-					<div class="w3-col w3-quarter w3-padding">
-						At day: {{ weather.dayTemp | celsius }} <br />
-						At night: {{ weather.nightTemp | celsius}} <br />
-						<img data-ng-src="{{weather.iconURL}}" alt="{{weather.weather_desc}}" title="{{weather.weather_desc}}" /> <br /> {{weather.weather_desc}} 
-					</div> 
+					<div class="forecast-day" ng-hide="isHidden($index)" class="w3-col">
+						<div class="w3-card-12 w3-quarter w3-margin w3-padding w3-round-large">
+							At day: {{ weather.dayTemp | celsius }} <br />
+							At night: {{ weather.nightTemp | celsius}} <br />
+							<img data-ng-src="{{weather.iconURL}}" alt="{{weather.weather_desc}}" title="{{weather.weather_desc}}" /> <br /> {{weather.weather_desc}} 
+						</div> 
+					</div>
 					
 				</div>
 			</div>
@@ -42,9 +50,10 @@
 		</div>
 		 <!-- Application js -->
 		 <script src="app.js"> </script>
-		 
+	 
 		 <script src="MainController.js"> </script>
 		 <script src="ForecastController.js"> </script>
 		 <script src="getCoordsService.js">  </script>
+		 
 	</body>
 </html>
